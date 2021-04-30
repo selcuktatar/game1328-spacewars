@@ -1,9 +1,11 @@
 <template>
-  <div id="app">
-    <header></header>
+  <v-container fluid
+               id="app"
+               style="height: 100vh; background-color: red;">
+    <!-- <header></header> -->
     <game></game>
-    <footer></footer>
-  </div>
+    <!-- <footer></footer> -->
+  </v-container>
 </template>
 
 <script>
@@ -11,7 +13,7 @@ export default {
   name: 'app',
   data() {
     return {}
-  }
+  },
 }
 </script>
 
@@ -20,13 +22,14 @@ export default {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
 }
 
 button {
   text-transform: uppercase;
-  font-size: .7em;
+  font-size: 0.7em;
   // background-color: #333;
   // color: #efefef;
   border: none;
@@ -39,8 +42,10 @@ button {
   color: #333;
 }
 
-#header, #game, #footer {
-  position: absolute;
+#header,
+#game,
+#footer {
+  // position: absolute;
 }
 
 #header {
@@ -50,10 +55,10 @@ button {
 }
 
 #game {
-  top: 80px;
+  top: 0px;
   width: 100%;
   min-height: calc(100%-200px);
-  height: calc(100%-200px);
+  height: 80vh;
   bottom: 60px;
 }
 

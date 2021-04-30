@@ -14,7 +14,7 @@ export default {
         minefield: Array,
         bombIcon: {
             type: String,
-            default: "💣"
+            default: "👽"
         },
         flagIcon: {
             type: String,
@@ -44,5 +44,8 @@ export default {
 .row {
     display: table;
     margin: 0 auto;
+}
+.row+.row {
+    margin-top: 0 !important;
 }
 </style>
