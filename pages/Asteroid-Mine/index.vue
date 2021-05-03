@@ -1,15 +1,13 @@
 <template>
-  <v-container fluid
-               style="background-color: red;">
-
-    <game></game>
-
-  </v-container>
+  <v-row>
+    <v-col>
+      <game></game>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
 export default {}
 </script>
 
-<style>
-</style>
+<style></style>

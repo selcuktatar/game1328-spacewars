@@ -1,24 +1,92 @@
 <template>
-  <div id="game">
-    <!-- <form class="options"
+  <section style="padding-bottom: 20vh">
+    <v-row justify="center">
+      <v-col cols="12" lg="3">
+        <v-card class="my-13">
+          <v-row justify="center" align="baseline">
+            <v-card-title class="headline"
+              >{{ levelSettings.levelName }}
+            </v-card-title>
+            <game-over
+              :score="gameScore"
+              :icon="levelSettings.flagIcon"
+              @startNewGame="prepareNewGame"
+              v-if="gameOver"
+            ></game-over>
+          </v-row>
+        </v-card>
+        <v-card class="my-13">
+          <v-row justify="center" align="baseline">
+            <v-card-title
+              >Rank Points &nbsp;
+              <span class="overline">
+                {{ levelSettings.flagIcon }}x{{ levelSettings.rpMultiplier }}
+              </span>
+              &nbsp;
+              {{ gameScore }}
+            </v-card-title>
+          </v-row>
+        </v-card>
+        <v-card>
+          <v-card-title>Mission Objective</v-card-title>
+          <v-card-text>
+            <span class="body-2">{{ levelSettings.missonObjective }}</span>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" lg="8">
+        <!-- <v-img src="/Logo-Wide.png"
+               class="pb-12"
+               width="100%"
+               contain></v-img> -->
+        <v-card :color="levelSettings.boardColor">
+          <v-card-text>
+            <div id="game">
+              <!-- <form class="options"
           @submit.prevent="prepareNewGame">
       Size <input class="number-input" :min="fieldSizeMin" :max="fieldSizeMax" :placeholder="fieldSizeDefault" v-model.number="fieldSize" type="number" />
       <button>New game</button>
     </form> -->
-    <!-- <h2 class="game-state">{{ gameStateText }}</h2> -->
-    <p>{{ bombStateText }}</p>
+              <!-- <h2 class="game-state">{{ gameStateText }}</h2> -->
+              <!-- <p>{{ bombStateText }}</p> -->
 
-    <!-- <button-switch id="mine-mode-switch"
+              <!-- <button-switch id="mine-mode-switch"
                    @onSelected="onModeChanged"></button-switch> -->
-    <minefield :minefield="minefield"
-               @onCellLeftClicked="onCellClicked"
-               @onCellRightClicked="onCellFlagged"></minefield>
-  </div>
+              <minefield
+                :minefield="minefield"
+                @onCellLeftClicked="onCellClicked"
+                @onCellRightClicked="onCellFlagged"
+              ></minefield>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </section>
 </template>
 
 <script>
 export default {
   props: {
+    levelSettings: {
+      type: Object,
+      default: () => {
+        return {
+          boardColor: '#B8B8B8',
+          levelName: 'Asteroid Mine',
+          rpMultiplier: 1,
+          missonObjective:
+            'This asteroid contains heavy amounts of minerals needed to upgrade our fleet. Mine as much as you can. But be careful there are most likely Alien Traps that you should avoid at all cost. If they spot us they will steal our ore! ',
+          bombIcon: '👽',
+          flagIcon: '💎',
+          startText: 'AVOID DETECTION! ⚒️',
+          emptyCellText: 'Nice!',
+          highProxCellText: 'Close one!',
+          winText: 'You won! 💎',
+          loseText: 'Game over! 💥',
+        }
+      },
+    },
     bombIcon: {
       type: String,
       default: '👽',
@@ -78,14 +146,29 @@ export default {
   created() {
     this.prepareNewGame()
   },
+  watch: {
+    levelName(newVal, oldVal) {
+      if (newVal === 'World-01') {
+        // this.rpMultiplier = 2
+      }
+    },
+  },
+  mounted() {
+    console.log(this.$route.name)
+  },
   computed: {
+    levelName() {
+      return this.$route.name
+    },
     gameScore() {
       let score = 0
       for (let x = 0; x < this.size; x++) {
         for (let y = 0; y < this.size; y++) {
           //   console.log(this.minefield[x][y])
-          if (this.minefield[x][y].isRevealed) {
-            score += this.minefield[x][y].proximityCount * 3
+          if (this.minefield[x][y].isRevealed && !this.minefield[x][y].isBomb) {
+            score +=
+              this.minefield[x][y].proximityCount *
+              this.levelSettings.rpMultiplier
           }
         }
       }
@@ -99,7 +182,7 @@ export default {
         ' / ' +
         this.amountOfBombs +
         ' ' +
-        this.bombIcon
+        this.levelSettings.bombIcon
       )
     },
   },
@@ -117,7 +200,7 @@ export default {
       this.amountOfCellsMarked = 0
 
       // Change the game state text to wish the player good luck
-      this.gameStateText = this.startText
+      this.gameStateText = this.levelSettings.startText
 
       // Save the current field size
       this.size = this.fieldSize
@@ -227,7 +310,7 @@ export default {
 
         // If it is an empty cell, clear all adjecent cells
         if (cell.proximityCount == 0) {
-          this.gameStateText = this.emptyCellText
+          this.gameStateText = this.levelSettings.emptyCellText
           const vm = this
           const closure = function (adjecentCell) {
             if (!adjecentCell.isRevealed) {
@@ -249,9 +332,9 @@ export default {
 
         // Compliment on close call
         if (cell.proximityCount > 2) {
-          this.gameStateText = this.highProxCellText
+          this.gameStateText = this.levelSettings.highProxCellText
         }
-        console.log(this.minefield)
+        // console.log(this.minefield)
       }
     },
     onCellFlagged(coord) {
@@ -314,7 +397,7 @@ export default {
         this.bombList[b].isRevealed = true
       }
 
-      this.gameStateText = this.loseText
+      this.gameStateText = this.levelSettings.loseText
     },
     setGameWon() {
       this.gameOver = true
@@ -325,7 +408,7 @@ export default {
           cell.isRevealed = cell.isBomb ? false : true
         }
       }
-      this.gameStateText = this.winText
+      this.gameStateText = this.levelSettings.winText
     },
   },
 }
@@ -356,7 +439,7 @@ function shuffle(array) {
 <style lang="scss" scoped>
 #game {
   text-align: center;
-  margin-left: -12px;
+  // margin-left: -12px;
 }
 
 #minefield {

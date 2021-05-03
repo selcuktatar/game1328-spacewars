@@ -1,16 +1,23 @@
 <template>
-  <v-app>
-    <v-navigation-drawer v-model="drawer"
-                         :mini-variant="miniVariant"
-                         :clipped="clipped"
-                         fixed
-                         app>
+  <v-app class="game-backdrop">
+    <alert></alert>
+    <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant="miniVariant"
+      :clipped="false"
+      dark
+      src="/Game-Backdrop.png"
+      fixed
+      app
+    >
       <v-list>
-        <v-list-item v-for="(item, i) in items"
-                     :key="i"
-                     :to="item.to"
-                     router
-                     exact>
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -20,13 +27,13 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped"
-               fixed
-               app>
-      <v-app-bar-nav-icon color="primary"
-                          text
-                          light
-                          @click.stop="drawer = !drawer" />
+    <v-app-bar :clipped-left="false" fixed flat app color="transparent">
+      <v-app-bar-nav-icon
+        color="white"
+        text
+        light
+        @click.stop="drawer = !drawer"
+      />
       <!-- <v-btn
         icon
         @click.stop="miniVariant = !miniVariant"
@@ -45,7 +52,8 @@
       >
         <v-icon>mdi-minus</v-icon>
       </v-btn> -->
-      <v-toolbar-title v-text="title" />
+      <!-- <v-toolbar-title v-text="title" /> -->
+      <v-img height="72" contain src="/Logo-Wide.png"></v-img>
       <v-spacer />
       <!-- <v-btn
         icon
@@ -54,38 +62,31 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn> -->
     </v-app-bar>
-    <v-main style="background-color: blue;">
-      <v-container fluid
-                   style="background-color: purple;">
+    <v-main style="">
+      <v-container fluid>
         <v-row>
           <v-col cols="12">
             <nuxt />
           </v-col>
-
         </v-row>
       </v-container>
     </v-main>
-    <v-navigation-drawer v-model="rightDrawer"
-                         :right="right"
-                         temporary
-                         fixed>
+    <!-- <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
         <v-list-item @click.native="right = !right">
           <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
+            <v-icon light> mdi-repeat </v-icon>
           </v-list-item-action>
           <v-list-item-title>Switch drawer (click me)</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
-    <v-footer :absolute="!fixed"
+    </v-navigation-drawer> -->
+    <!-- <v-footer :absolute="false"
               app>
       <span>Mike Tierce GAME-1328-0390 Practium </span>
       <v-spacer></v-spacer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 
@@ -98,13 +99,18 @@ export default {
       fixed: true,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Level I',
-          to: '/level-one',
+          icon: 'fal fa-question-square',
+          title: 'Demo Instructions',
+          to: '/',
         },
         {
-          icon: 'mdi-apps',
-          title: 'Level II',
+          icon: 'fal fa-backpack',
+          title: 'Inventory',
+          to: '/fleet-inventory',
+        },
+        {
+          icon: 'fal fa-meteor',
+          title: 'The Asteroid Mine',
           to: '/asteroid-mine',
         },
       ],
@@ -116,3 +122,10 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.game-backdrop {
+  overflow: auto;
+  background-image: url('/Game-Backdrop.png');
+  background-size: cover;
+}
+</style>
