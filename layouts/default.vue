@@ -1,23 +1,19 @@
 <template>
   <v-app class="game-backdrop">
     <alert></alert>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="false"
-      dark
-      src="/Game-Backdrop.png"
-      fixed
-      app
-    >
+    <v-navigation-drawer v-model="drawer"
+                         :mini-variant="miniVariant"
+                         :clipped="false"
+                         dark
+                         color="#04040D"
+                         fixed
+                         app>
       <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
+        <v-list-item v-for="(item, i) in items"
+                     :key="i"
+                     :to="item.to"
+                     router
+                     exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -27,13 +23,15 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="false" fixed flat app color="transparent">
-      <v-app-bar-nav-icon
-        color="white"
-        text
-        light
-        @click.stop="drawer = !drawer"
-      />
+    <v-app-bar :clipped-left="false"
+               fixed
+               flat
+               app
+               color="transparent">
+      <v-app-bar-nav-icon color="white"
+                          text
+                          light
+                          @click.stop="drawer = !drawer" />
       <!-- <v-btn
         icon
         @click.stop="miniVariant = !miniVariant"
@@ -53,7 +51,10 @@
         <v-icon>mdi-minus</v-icon>
       </v-btn> -->
       <!-- <v-toolbar-title v-text="title" /> -->
-      <v-img height="72" contain src="/Logo-Wide.png"></v-img>
+      <v-spacer></v-spacer>
+      <v-img height="72"
+             contain
+             src="/Logo-Wide.png"></v-img>
       <v-spacer />
       <!-- <v-btn
         icon

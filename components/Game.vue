@@ -1,24 +1,23 @@
 <template>
   <section style="padding-bottom: 20vh">
     <v-row justify="center">
-      <v-col cols="12" lg="3">
+      <v-col cols="12"
+             lg="3">
         <v-card class="my-13">
-          <v-row justify="center" align="baseline">
-            <v-card-title class="headline"
-              >{{ levelSettings.levelName }}
+          <v-row justify="center"
+                 align="baseline">
+            <v-card-title class="headline">{{ levelSettings.levelName }}
             </v-card-title>
-            <game-over
-              :score="gameScore"
-              :icon="levelSettings.flagIcon"
-              @startNewGame="prepareNewGame"
-              v-if="gameOver"
-            ></game-over>
+            <game-over :score="gameScore"
+                       :icon="levelSettings.flagIcon"
+                       @startNewGame="prepareNewGame"
+                       v-if="gameOver"></game-over>
           </v-row>
         </v-card>
         <v-card class="my-13">
-          <v-row justify="center" align="baseline">
-            <v-card-title
-              >Rank Points &nbsp;
+          <v-row justify="center"
+                 align="baseline">
+            <v-card-title>Rank Points &nbsp;
               <span class="overline">
                 {{ levelSettings.flagIcon }}x{{ levelSettings.rpMultiplier }}
               </span>
@@ -34,12 +33,14 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" lg="8">
+      <v-col cols="12"
+             lg="8">
         <!-- <v-img src="/Logo-Wide.png"
                class="pb-12"
                width="100%"
                contain></v-img> -->
-        <v-card :color="levelSettings.boardColor">
+        <v-card :color="levelSettings.boardColor"
+                :style="`background-image: url(${levelSettings.backdrop}); background-size: cover;`">
           <v-card-text>
             <div id="game">
               <!-- <form class="options"
@@ -52,11 +53,9 @@
 
               <!-- <button-switch id="mine-mode-switch"
                    @onSelected="onModeChanged"></button-switch> -->
-              <minefield
-                :minefield="minefield"
-                @onCellLeftClicked="onCellClicked"
-                @onCellRightClicked="onCellFlagged"
-              ></minefield>
+              <minefield :minefield="minefield"
+                         @onCellLeftClicked="onCellClicked"
+                         @onCellRightClicked="onCellFlagged"></minefield>
             </div>
           </v-card-text>
         </v-card>

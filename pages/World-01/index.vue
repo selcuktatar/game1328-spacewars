@@ -12,6 +12,7 @@ export default {
     return {
       levelSettings: {
         levelName: 'Alien World',
+        backdrop: '/worlds/alien-world.jpg',
         boardColor: '#F26718',
         rpMultiplier: 3,
         missonObjective:
