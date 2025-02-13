@@ -33,8 +33,6 @@
         />
         <GameModal 
         buttonText="How can I play this game?"
-        :header="mainHeadline"
-        :description="gameRules"
          />
           
       </v-col>
@@ -164,9 +162,6 @@ export default {
     
   },
   computed: {
-    ...mapGetters({ mainHeadline: 'messages/InstructionMainHeadline' }),
-    ...mapGetters({ subtitle: 'messages/InstructionSubtitle' }),
-    ...mapGetters({ gameRules: 'messages/InstructionGameRules' }),
     levelName() {
       return this.$route.name
     },

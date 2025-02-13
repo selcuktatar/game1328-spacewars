@@ -6,9 +6,7 @@ export default {
         }
     },
     props: {
-        buttonText: String,
-        header: String,
-        description: String,
+        buttonText: String
     }
 }
 </script>
