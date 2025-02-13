@@ -1,5 +1,5 @@
 <template>
-  <DemoInstructions />
+  <InstructionsCard />
 </template>
 
 <script>
