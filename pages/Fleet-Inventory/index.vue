@@ -3,7 +3,9 @@
     <v-row justify="center" style="min-height: 100vh">
       <v-col cols="12" lg="3">
         <v-card style="width: 100%">
-          <InventoryRankPoints title="Rank Point" />
+          <InventoryRankPoints 
+           title="Rank Point"
+           :isCenter=false />
           <InventoryPlayerItems />
         </v-card>
       </v-col>
