@@ -3,23 +3,10 @@
     <v-row justify="center" style="min-height: 100vh">
       <v-col cols="12" lg="3">
         <v-card style="width: 100%">
-          <v-card-title>Rank Points 💎 {{ rankPoints }}</v-card-title>
-          <v-list>
-            <v-list-item
-              v-for="(item, index) in playerItems"
-              :key="`item-${index}`"
-            >
-              <v-list-item-avatar>
-                <v-avatar size="32">
-                  <v-img :src="item.image" width="32" aspect-ratio="1"></v-img>
-                </v-avatar>
-              </v-list-item-avatar>
-              <v-list-item-title>
-                {{ item.name }}
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-card>
+        <InventoryRankPoints />
+        <InventoryPlayerItems />
+      </v-card>
+
       </v-col>
       <v-col cols="12" lg="7">
         <v-card style="width: 100%">
