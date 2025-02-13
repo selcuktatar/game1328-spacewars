@@ -31,9 +31,11 @@
           headline="Mission Objective" 
           :description="levelSettings.missonObjective"
         />
-        <Card 
-          ui="my-13"
-        />
+        <GameModal 
+        buttonText="How can I play this game?"
+        :header="mainHeadline"
+        :description="gameRules"
+         />
           
       </v-col>
       <v-col cols="12"
@@ -68,6 +70,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     levelSettings: {
@@ -157,8 +161,12 @@ export default {
   },
   mounted() {
     console.log(this.$route.name)
+    
   },
   computed: {
+    ...mapGetters({ mainHeadline: 'messages/InstructionMainHeadline' }),
+    ...mapGetters({ subtitle: 'messages/InstructionSubtitle' }),
+    ...mapGetters({ gameRules: 'messages/InstructionGameRules' }),
     levelName() {
       return this.$route.name
     },
