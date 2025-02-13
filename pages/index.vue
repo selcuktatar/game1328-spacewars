@@ -1,5 +1,8 @@
 <template>
-  <InstructionsCard />
+  <div>
+    <InstructionsCard />
+    <Leaderboard />
+  </div>
 </template>
 
 <script>

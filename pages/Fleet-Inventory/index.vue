@@ -4,7 +4,7 @@
       <v-col cols="12" lg="3">
         <v-card style="width: 100%">
           <InventoryRankPoints 
-           title="Rank Point"
+           title="Rank Point:"
            :isCenter=false />
           <InventoryPlayerItems />
         </v-card>
