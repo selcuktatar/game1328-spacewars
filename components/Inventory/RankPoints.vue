@@ -1,6 +1,9 @@
 <script> 
 import { mapGetters } from 'vuex'
 export default {
+  props: {
+    title: String,
+  },
     data() {
         return {}
     },
@@ -11,6 +14,6 @@ export default {
 </script>
 <template>
   <v-card-title>
-    Rank Points 💎 {{ rankPoints }}
+    {{ title }} 💎 {{ rankPoints }}
     </v-card-title>
 </template>
