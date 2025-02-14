@@ -5,8 +5,10 @@ import { mapGetters } from 'vuex'
     data () {
       return {
         header: 'Welcome to the Space Wars',
-        description: 'Please enter your username. If you never created your account before, you can create your username typing here!',
+        description: 'Please enter your username and name. If you never created your account before, you can create your username and name typing here!',
         username: '',
+        name: '',
+        point: 0,
         storeUsername: '',
         dialog: true,
         isLoading: false,
@@ -44,13 +46,31 @@ import { mapGetters } from 'vuex'
             this.username = this.storeUsername
             return
         },
-        updateStoreUsername() {
-            const message = this.$store.dispatch('game/onUpdateUsername', this.username)
+        updateStoreUserInfo() {
+            this.$store.dispatch('game/onUpdateUserInfo', { username: this.username, name: this.name, rankPoints: this.point })
         },
-        async updateUserNameFirestore() {
-            await this.$fire.firestore.collection('leaderboard').doc().set({
-                name: this.username,
-                point: 0
+        checkUserLoginInfo() {
+            const username = this.username.toLowerCase();
+            const name = this.name.toLowerCase();
+            
+            const users = this.$store.state.game.users;
+            
+            const exists = users.some(user => user.username === username);
+            const userInfo = users.find(user => user.username === username)
+            if (exists) {
+                this.username = userInfo.username
+                this.name = userInfo.name
+                this.point = userInfo.point
+                return true; 
+            } else {
+                return false; 
+            }
+        },
+        async createUserFirestore() {
+            await this.$fire.firestore.collection('leaderboard').doc(this.username.toLowerCase()).set({
+                name: this.name.toLowerCase(),
+                username: this.username.toLowerCase(),
+                point: this.point
             });
         },
         async updateUsersState() {
@@ -59,8 +79,11 @@ import { mapGetters } from 'vuex'
         },
         async submit() {
             this.isLoading = true
-            this.updateStoreUsername()
-            await this.updateUserNameFirestore()
+            const isCreated = this.checkUserLoginInfo()
+            if (!isCreated) {
+              await this.createUserFirestore()
+            }
+            this.updateStoreUserInfo()
             this.isLoading = false
             this.dialog = false
         }
@@ -81,10 +104,17 @@ import { mapGetters } from 'vuex'
         <v-card-text>{{ description }}</v-card-text>
         <v-text-field
             class="ml-2"
+            label="Name"
+            :rules="rules"
+            hide-details="auto"
+            v-model.trim="name"
+        ></v-text-field>
+        <v-text-field
+            class="ml-2"
             label="Username"
             :rules="rules"
             hide-details="auto"
-            v-model="username"
+            v-model.trim="username"
         ></v-text-field>
         <v-card-actions>
           <v-spacer></v-spacer>

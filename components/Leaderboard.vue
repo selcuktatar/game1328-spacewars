@@ -33,10 +33,10 @@ export default {
         <v-list-item v-for="(item, index) in sortedLeaderboardData" :key="item.id">
           <v-list-item-avatar>
             <v-avatar size="36" color="info">
-              <span class="white--text text-h5">{{ getFirstLetters(item.name) }}</span>
+              <span class="white--text text-h5">{{ getFirstLetters(item.name.toUpperCase()) }}</span>
             </v-avatar>
           </v-list-item-avatar>
-          <v-list-item-title>
+          <v-list-item-title class="first-letter">
             {{ item.name }}
           </v-list-item-title>
           <v-layout class="justify-end">
@@ -50,5 +50,10 @@ export default {
     </v-card>
   </v-container>
 </template>
+<style scoped>
+.first-letter {
+    text-transform: capitalize;
+}
+</style>
 
 
