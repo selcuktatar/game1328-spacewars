@@ -12,6 +12,14 @@ export default {
     async purchase(item) {
       console.log(item)
       const message = await this.$store.dispatch('game/onPurchaseItem', item)
+      const username = this.$store.state.game.username
+      const rankPoints = this.$store.state.game.rankPoints
+      await this.$fire.firestore
+        .collection('leaderboard')
+        .doc(username)
+        .update({
+          point: rankPoints
+      });
       console.log(message)
     },
   }

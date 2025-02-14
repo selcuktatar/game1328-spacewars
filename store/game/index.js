@@ -97,7 +97,7 @@ export const actions = {
   onShowAlert({ commit }, payload) {
     commit('SET_SNACK_ITEM', payload)
   },
-  onPurchaseItem({ commit, state, dispatch }, payload) {
+  async onPurchaseItem({ commit, state, dispatch }, payload) {
     if (state.rankPoints - payload.cost > 0) {
       commit('SET_PLAYER_ITEM', payload)
       commit('REMOVE_RANK_POINTS', payload.cost)
