@@ -88,6 +88,7 @@
       <v-spacer></v-spacer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer> -->
+    <GameRegistiration />
   </v-app>
 </template>
 
