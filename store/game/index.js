@@ -4,6 +4,7 @@ export const types = {
 
 export const state = () => ({
   username: '',
+  users: [],
   snackbar: {
     visible: true,
     message: '',
@@ -81,8 +82,11 @@ export const mutations = {
   ADD_RANK_POINTS(state, payload) {
     state.rankPoints += payload
   },
-  UPDATE_USER_USERNAME(state, payload) {
+  SET_USER_USERNAME(state, payload) {
     state.username = payload
+  },
+  SET_USERS(state, payload) {
+    state.users = payload
   }
 }
 
@@ -113,11 +117,14 @@ export const actions = {
     commit('ADD_RANK_POINTS', payload)
   },
   onUpdateUsername({commit, dispatch}, payload) {
-    commit('UPDATE_USER_USERNAME', payload)
+    commit('SET_USER_USERNAME', payload)
     dispatch('onShowAlert', {
       visible: true,
       message: `You are logged in your account.`,
       color: 'primary',
     })
   },
+  onUpdateUsers({commit}, payload) {
+    commit('SET_USERS', payload)
+  }
 }

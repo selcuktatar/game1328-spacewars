@@ -5,13 +5,11 @@ export default {
     await this.getLeaderboardData()
   },
   data() {
-    return {
-      leaderboardData: []
-    }
+    return {}
   },
   computed: {
     sortedLeaderboardData() {
-      return this.leaderboardData.slice().sort((a, b) => b.point - a.point)
+      return this.$store.state.game.users.slice().sort((a, b) => b.point - a.point)
     }
   },
   methods: {
@@ -20,7 +18,7 @@ export default {
     },
     async getLeaderboardData() {
       const documents = await this.$fire.firestore.collection('leaderboard').get()
-      this.leaderboardData = documents.docs.map(doc => doc.data())
+      this.$store.dispatch('game/onUpdateUsers', documents.docs.map(doc => doc.data()))
     }
   }
 }
@@ -29,6 +27,7 @@ export default {
   <v-container>
     <v-card>
       <v-card-title class="font-weight-bold">Leaderboard</v-card-title>
+      <!-- TODO: REFRESH BUTTON -->
       <v-divider></v-divider>
       <v-list v-if="sortedLeaderboardData.length > 0">
         <v-list-item v-for="(item, index) in sortedLeaderboardData" :key="item.id">
@@ -51,4 +50,5 @@ export default {
     </v-card>
   </v-container>
 </template>
+
 

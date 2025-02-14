@@ -24,9 +24,9 @@ import { mapGetters } from 'vuex'
         return true
       },
     },
-    async mounted() {
-        this.storeUsername = await this.$store.state.game.username
-        await this.checkStoreUsername()
+    mounted() {
+        this.storeUsername = this.$store.state.game.username
+        this.checkStoreUsername()
     },
      methods: {
         checkStoreUsername() {
@@ -47,10 +47,20 @@ import { mapGetters } from 'vuex'
         updateStoreUsername() {
             const message = this.$store.dispatch('game/onUpdateUsername', this.username)
         },
+        async updateUserNameFirestore() {
+            await this.$fire.firestore.collection('leaderboard').doc().set({
+                name: this.username,
+                point: 0
+            });
+        },
+        async updateUsersState() {
+            const documents = await this.$fire.firestore.collection('leaderboard').get()
+            this.$store.dispatch('game/onUpdateUsers', documents.docs.map(doc => doc.data()))
+        },
         async submit() {
             this.isLoading = true
-            this.checkStoreUsername()
             this.updateStoreUsername()
+            await this.updateUserNameFirestore()
             this.isLoading = false
             this.dialog = false
         }
