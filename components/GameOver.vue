@@ -49,8 +49,16 @@ export default {
       default: '💎',
     },
   },
-  mounted() {
+  async mounted() {
     this.$store.commit('game/ADD_RANK_POINTS', this.score)
+    const username = this.$store.state.game.username
+    const rankPoints = this.$store.state.game.rankPoints
+    await this.$fire.firestore
+      .collection('leaderboard')
+      .doc(username)
+      .update({
+        point: rankPoints
+      });
   },
   data() {
     return {

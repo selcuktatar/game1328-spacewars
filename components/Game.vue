@@ -15,23 +15,26 @@
           </v-row>
         </v-card>
         <v-card class="my-13">
-          <v-row justify="center"
-                 align="baseline">
-            <v-card-title>Rank Points &nbsp;
-              <span class="overline">
-                {{ levelSettings.flagIcon }}x{{ levelSettings.rpMultiplier }}
-              </span>
-              &nbsp;
-              {{ gameScore }}
-            </v-card-title>
-          </v-row>
+          <GameRankPoint 
+          :flagIcon="levelSettings.flagIcon"
+          :rpMultiplier="levelSettings.rpMultiplier"
+          :gameScore="gameScore" 
+          />
         </v-card>
-        <v-card>
-          <v-card-title>Mission Objective</v-card-title>
-          <v-card-text>
-            <span class="body-2">{{ levelSettings.missonObjective }}</span>
-          </v-card-text>
+        <v-card class="my-13">
+          <InventoryRankPoints 
+            title="Total Points"
+            :isCenter=true
+          />
         </v-card>
+        <Card
+          headline="Mission Objective" 
+          :description="levelSettings.missonObjective"
+        />
+        <GameModal 
+        buttonText="How can I play this game?"
+         />
+          
       </v-col>
       <v-col cols="12"
              lg="8">
@@ -65,6 +68,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     levelSettings: {
@@ -154,6 +159,7 @@ export default {
   },
   mounted() {
     console.log(this.$route.name)
+    
   },
   computed: {
     levelName() {
