@@ -3,6 +3,9 @@ export const types = {
 }
 
 export const state = () => ({
+  username: '',
+  name: '',
+  users: [],
   snackbar: {
     visible: true,
     message: '',
@@ -50,6 +53,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  getUsername(state) {
+    return state.username
+  },
   snackbar(state) {
     return state.snackbar
   },
@@ -77,13 +83,21 @@ export const mutations = {
   ADD_RANK_POINTS(state, payload) {
     state.rankPoints += payload
   },
+  SET_USER_INFO(state, payload) {
+    state.username = payload.username
+    state.name = payload.name
+    state.rankPoints = payload.rankPoints
+  },
+  SET_USERS(state, payload) {
+    state.users = payload
+  }
 }
 
 export const actions = {
   onShowAlert({ commit }, payload) {
     commit('SET_SNACK_ITEM', payload)
   },
-  onPurchaseItem({ commit, state, dispatch }, payload) {
+  async onPurchaseItem({ commit, state, dispatch }, payload) {
     if (state.rankPoints - payload.cost > 0) {
       commit('SET_PLAYER_ITEM', payload)
       commit('REMOVE_RANK_POINTS', payload.cost)
@@ -105,4 +119,15 @@ export const actions = {
   onAddRankPoints({ commit }, payload) {
     commit('ADD_RANK_POINTS', payload)
   },
+  onUpdateUserInfo({commit, dispatch}, payload) {
+    commit('SET_USER_INFO', payload)
+    dispatch('onShowAlert', {
+      visible: true,
+      message: `You are logged in your account.`,
+      color: 'primary',
+    })
+  },
+  onUpdateUsers({commit}, payload) {
+    commit('SET_USERS', payload)
+  }
 }
